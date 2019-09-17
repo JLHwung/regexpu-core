@@ -256,6 +256,10 @@ const processTerm = (item, regenerateOptions, groups) => {
 			break;
 		case 'value':
 			const codePoint = item.codePoint;
+			if (item.kind === "symbol" && codePoint < 0x80) {
+				// skip regenerate when it is an ASCII symbol
+				break;
+			}
 			const set = regenerate(codePoint);
 			if (config.ignoreCase && config.unicode && !config.useUnicodeFlag) {
 				const folded = caseFold(codePoint);
